@@ -1,0 +1,20 @@
+cat > Pets << EOF
+Dogs
+Cats
+Hamster
+EOF
+cat > Pack_animals << EOF
+Horses
+Carmels
+Donkeys
+EOF
+cat Pets Pack_animals > Animals
+cat Animals
+mv Animals Human_friends
+mkdir Animals
+mv Human_friends Animals/
+sudo apt update
+sudo apt install mysql-server
+sudo dpkg -i somepackage.deb
+sudo dpkg -r somepackage
+sudo mysql -u root -p
