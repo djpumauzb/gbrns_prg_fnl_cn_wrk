@@ -18,3 +18,55 @@ sudo apt install mysql-server
 sudo dpkg -i somepackage.deb
 sudo dpkg -r somepackage
 sudo mysql -u root -p
+
+CREATE DATABASE Friends_of_Human;
+USE Friends_of_Human;
+
+CREATE TABLE Animals (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(50),
+    Commands VARCHAR(255),
+    Type VARCHAR(50),
+    Birthday DATE
+);
+
+INSERT INTO Animals (Name, Commands, Type, Birthday) VALUES 
+('Sharik', 'Sit, Lay down', 'Dog', '2022-03-01'),
+('Meri', 'Say myau', 'Cat', '2021-07-15'),
+('Xoma', 'Run in a wheel', 'Hamster', '2023-01-20'),
+('Bucefal', 'Pulling a cart', 'Horse', '2020-01-20'),
+('Gorbaty', 'Carrying cargo', 'Camel', '2019-11-11'),
+('Eshshakbek', 'Invite a human', 'Donkey', '2019-11-11');
+
+SELECT * FROM Animals;
+
+DELETE FROM Animals WHERE Type = 'Camel';
+
+CREATE TABLE Horses_and_Donkeys AS
+SELECT * FROM Animals WHERE Type IN ('Horse', 'Donkey');
+
+SELECT * FROM Horses_and_Donkeys;
+
+CREATE TABLE Young_animals AS
+SELECT 
+    id,
+    Name,
+    Commands,
+    Type,
+    Birthday,
+    TIMESTAMPDIFF(MONTH, Birthday, CURDATE()) AS Age_by_month
+FROM Animals
+WHERE TIMESTAMPDIFF(YEAR, Birthday, CURDATE()) BETWEEN 1 AND 3;
+
+SELECT * FROM Young_animals;
+
+CREATE TABLE All_animals_combined AS
+SELECT *, 'Animals' AS Source FROM Animals
+UNION ALL
+SELECT *, 'Young_animals' AS Source FROM Young_animals
+UNION ALL
+SELECT *, 'Horses_and_Donkeys' AS Source FROM Horses_and_Donkeys;
+
+SELECT * FROM All_animals_combined;
+
+EXIT;
